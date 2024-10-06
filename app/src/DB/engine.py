@@ -3,7 +3,7 @@ from sqlmodel import create_engine
 from sqlalchemy import create_engine
 
 
-IP = os.getenv("DB_IP","THD_Postgres")
+IP = os.getenv("DB_IP","localhost")
 PORT = os.getenv('DB_Port', '5432')
 DB_NAME = os.getenv('DB_Name', 'THD')
 
