@@ -40,5 +40,4 @@ jobs:
       # Task for testing with pytest
       - name: Test with pytest
         run: |
-          cd ./app
           pytest
