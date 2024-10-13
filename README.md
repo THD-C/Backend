@@ -1,8 +1,11 @@
 # Backend
+[![Run Python Test](https://github.com/THD-C/Backend/actions/workflows/run-tests.yml/badge.svg)](https://github.com/THD-C/Backend/actions/workflows/run-tests.yml)
 ## Vercel production
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/backend-liard-one?name=Vercel)
+
 [Deployment Repo](https://github.com/THDCPL/Backend)
 
-[URL](https://backend-liard-one.vercel.app)
+[API](https://backend-liard-one.vercel.app)
 
 `https://backend-liard-one.vercel.app`
 
