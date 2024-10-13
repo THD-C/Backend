@@ -1,7 +1,7 @@
 from sqlmodel import SQLModel, Field
 
 class User(SQLModel, table=True):
-    __tablename__: str = 'User'
+    __tablename__: str = 'user'
     
     id: int = Field(primary_key=True, default=None)
     username: str = Field()

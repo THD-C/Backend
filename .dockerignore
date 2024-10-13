@@ -1,0 +1,10 @@
+.gitignore
+.git
+compose.yaml
+Dockerfile
+README.md
+vercel.json
+.venv
+.vscode
+.vercel
+.github
