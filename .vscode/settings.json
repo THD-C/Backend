@@ -1,11 +1,16 @@
 {
     "cSpell.words": [
+        "Debuger",
         "dotenv",
         "fastapi",
         "pydantic",
         "sessionmaker",
         "sqlalchemy",
         "sqlmodel",
-        "uvicorn"
-    ]
+        "uvicorn",
+        "verceldb"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    }
 }

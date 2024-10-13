@@ -13,13 +13,13 @@ jobs:
     if: github.repository == 'THD-C/Backend'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: |   # To fetch all history for all tags and branches
           git fetch --prune --unshallow  
   
       
       - name: Set up Python 3.13
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.12 # Modify python version HERE
   
@@ -34,11 +34,9 @@ jobs:
       - name: Lint with black
         run: |
           # Code formatting with black, check every python file in the src directory 
-          black src 
-          black --check app
+          black --check --diff src
       
       # Task for testing with pytest
       - name: Test with pytest
         run: |
-          cd ./app
           pytest

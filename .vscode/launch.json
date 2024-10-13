@@ -7,7 +7,6 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}/app",
         },
         {
             "name": "Debuger FastAPI",
@@ -15,7 +14,6 @@
             "request": "launch",
             "module": "uvicorn",
             "args": ["main:app", "--reload"],
-            "cwd": "${workspaceFolder}/app",
             "jinja": true
         }
     ]

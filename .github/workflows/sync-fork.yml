@@ -3,10 +3,6 @@ run-name: Sync Fork (Deployment)
 
 on:
   workflow_dispatch:
-    inputs:
-      run_guid:
-        type: string
-        required: true
 
 jobs:
   Sync-Fork:
@@ -14,7 +10,7 @@ jobs:
     steps:
       - name: Sync a fork branch with the upstream repository
         run: |
-          curl -L \
+          curl -L -s --fail-with-body \
             -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.THDCPL_TOKEN }}" \
