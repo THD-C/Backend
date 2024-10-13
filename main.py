@@ -13,6 +13,7 @@ DB.create_tables(drop_existing=True)
 app = FastAPI()
 app.include_router(Router.user_router)
 
+
 @app.get("/", response_class=responses.HTMLResponse)
 async def read_items():
     return """
@@ -26,5 +27,6 @@ async def read_items():
     </html>
     """
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
