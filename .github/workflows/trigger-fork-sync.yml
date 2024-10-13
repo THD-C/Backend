@@ -1,0 +1,74 @@
+name: Trigger Sync Fork
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Sync-Fork:
+    if: github.repository == 'THD-C/Backend'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run fork sync
+        id: run
+        env:
+          DEPLOYMENT_REPO: ${{ vars.DEPLOYMENT_REPO }}
+          SYNC_WF_NAME: ${{vars.SYNC_WF_NAME }}
+          GH_TOKEN: ${{ secrets.THDCPL_TOKEN }}
+        shell: pwsh
+        run: |
+
+          $Url = "https://api.github.com/repos/$($env:DEPLOYMENT_REPO)/actions/workflows/$($env:SYNC_WF_NAME)/dispatches"
+          $RunGuid = (New-Guid).Guid
+          
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "run_guid=$RunGuid"
+
+          Invoke-RestMethod -Uri $Url -Headers @{
+              "Accept" = "application/vnd.github+json"
+              "X-GitHub-Api-Version" = "2022-11-28"
+              "Authorization" = "Bearer $($env:GH_TOKEN)"
+          } -Body $(@{
+              "ref"= "main"
+              "inputs" = @{
+                  "run_guid" = "$RunGuid"
+              }
+          } | ConvertTo-Json) -Method POST
+        
+      - name: Wait for workflow result
+        env:
+          RUN_ID: ${{ steps.run.outputs.run_guid }}
+          DEPLOYMENT_REPO: ${{ vars.DEPLOYMENT_REPO }}
+          SYNC_WF_NAME: ${{vars.SYNC_WF_NAME }}
+          GH_TOKEN: ${{ secrets.THDCPL_TOKEN }}
+        run: |
+          $Url = "https://api.github.com/repos/$($env:DEPLOYMENT_REPO)/actions/workflows/$($env:SYNC_WF_NAME)/runs"
+          $Headers = @{
+              "Accept" = "application/vnd.github+json"
+              "X-GitHub-Api-Version" = "2022-11-28"
+              "Authorization" = "Bearer $($env:GH_TOKEN)"
+          }
+          
+          do {
+              $Workflows =  Invoke-RestMethod -Uri $Url -Headers $Headers
+              $RunURL = $($Workflows.workflow_runs | Where-Object {$_.name -like "*($env:RUN_ID)*"}).url
+          } while ($null -eq $RunURL) 
+          
+          Write-Host "Found workflow: $RunURL"
+          
+          do {
+              Start-Sleep -Seconds 10
+              $WorkflowStatus = Invoke-RestMethod -Uri $RunURL -Headers $Headers
+              Write-Host "Current status: $($WorkflowStatus.status)"
+          } while ($WorkflowStatus.status -in @("in_progress", "queued"))
+          
+          if(-not (($WorkflowStatus.status -eq "completed") -and ($WorkflowStatus.conclusion -eq "success"))){
+              Write-Host "Workflow URL: $($WorkflowStatus.html_url)"
+              throw "Fork Sync failed"
+          }else {
+              Write-Host "Workflow completed with conclusion: $($WorkflowStatus.conclusion)"
+          }
+
+          
+
