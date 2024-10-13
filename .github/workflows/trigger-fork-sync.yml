@@ -42,6 +42,7 @@ jobs:
           DEPLOYMENT_REPO: ${{ vars.DEPLOYMENT_REPO }}
           SYNC_WF_NAME: ${{vars.SYNC_WF_NAME }}
           GH_TOKEN: ${{ secrets.THDCPL_TOKEN }}
+        shell: pwsh
         run: |
           $Url = "https://api.github.com/repos/$($env:DEPLOYMENT_REPO)/actions/workflows/$($env:SYNC_WF_NAME)/runs"
           $Headers = @{
