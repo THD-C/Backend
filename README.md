@@ -2,9 +2,9 @@
 ## Vercel production
 [Deployment Repo](https://github.com/THDCPL/Backend)
 
-[URL](https://backend-cc7h5lcfm-thdcs-projects.vercel.app)
+[URL](https://backend-liard-one.vercel.app)
 
-`https://backend-cc7h5lcfm-thdcs-projects.vercel.app`
+`https://backend-liard-one.vercel.app`
 
 ## Local Development
 1. Run `docker compose build`

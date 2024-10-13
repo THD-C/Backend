@@ -9,6 +9,7 @@ on:
 
 jobs:
   Sync-Fork:
+    if: github.repository == 'THD-C/Backend'
     runs-on: ubuntu-latest
     steps:
       - name: Sync a fork branch with the upstream repository
