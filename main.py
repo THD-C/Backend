@@ -1,18 +1,17 @@
 import uvicorn
 from fastapi import FastAPI, responses
-import os
-from dotenv import load_dotenv
 
+import src.Utils as Utils
 import src.DB as DB
 import src.Router as Router
 
-load_dotenv()
 
 DB.create_tables(drop_existing=True)
 
 app = FastAPI()
 app.include_router(Router.user_router)
 
+Utils.OTEL.instrument_fastapi(app)
 
 @app.get("/", response_class=responses.HTMLResponse)
 async def read_items():
