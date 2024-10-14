@@ -8,13 +8,29 @@ import src.Router as Router
 
 DB.create_tables(drop_existing=True)
 
-app = FastAPI()
+app = FastAPI(
+    **{
+        "title": "THD(c)",
+        "summary": "Cryptocurrency trading training application Backend",
+        "version": "0.0.0",
+        "openapi_tags": [
+            {
+                "name": "User",
+                "description": "User account related endpoints",
+            },
+        ],
+    }
+)
 app.include_router(Router.user_router)
 
 Utils.OTEL.instrument_fastapi(app)
 
+
 @app.get("/", response_class=responses.HTMLResponse)
-async def read_items():
+async def base():
+    """
+    Default Page
+    """
     return """
     <html>
         <head>
