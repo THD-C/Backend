@@ -14,7 +14,10 @@ from src.Utils.OpenTelemetry.config import oTelConfig as Config
 if Config.trace_config_provided():
 
     trace_resource = Resource.create(
-        attributes={SERVICE_NAME: "THDc-Backend", DEPLOYMENT_ENVIRONMENT: Config.environment}
+        attributes={
+            SERVICE_NAME: "THDc-Backend",
+            DEPLOYMENT_ENVIRONMENT: Config.environment,
+        }
     )
     trace.set_tracer_provider(TracerProvider(resource=trace_resource))
 
@@ -32,10 +35,12 @@ if Config.trace_config_provided():
 def instrument_fastapi(app):
     (FastAPIInstrumentor().instrument_app(app))
 
+
 def instrument_sqlalchemy(engine):
     SQLAlchemyInstrumentor().instrument(
-    engine=engine,
-)
+        engine=engine,
+    )
+
 
 def get_trace_id() -> str:
     current_span = trace.get_current_span()
