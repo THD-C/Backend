@@ -6,6 +6,7 @@ import src.DB as DB
 user_router = APIRouter(prefix="/user")
 tracer = trace.get_tracer(__name__)
 
+
 @user_router.get("")
 def get_user(id: int = None) -> list[DB.User]:
     """
@@ -14,7 +15,9 @@ def get_user(id: int = None) -> list[DB.User]:
     with tracer.start_as_current_span("DB_query-select_users"):
         with DB.Session() as s:
             return (
-                s.query(DB.User).filter(DB.User.id == id if id is not None else True).all()
+                s.query(DB.User)
+                .filter(DB.User.id == id if id is not None else True)
+                .all()
             )
 
 

@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class oTelConfig:
     __username = os.getenv("GRAFANA_TRACE_USER", None)
     __password = os.getenv("GRAFANA_TRACE_PASS", None)
