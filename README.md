@@ -25,3 +25,12 @@ You can deploy app on your Vercel account executing following steps:
 2. Run `docker compose up -d`
 
 Database container uses a volume, so to remove it u need to add `-v` flag to command `docker compose down`
+
+# Links
+[FastAPI Docs](https://fastapi.tiangolo.com)
+
+[FastAPI Testing](https://fastapi.tiangolo.com/tutorial/testing/)
+
+[SQLModel Docs](https://sqlmodel.tiangolo.com)
+
+[Pydantic Docs](https://docs.pydantic.dev/latest/)

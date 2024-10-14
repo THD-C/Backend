@@ -7,7 +7,7 @@ user_router = APIRouter(prefix="/user")
 tracer = trace.get_tracer(__name__)
 
 
-@user_router.get("", tags=docs_tags)
+@user_router.get("", tags=docs_tags, response_model=DB.User)
 def get_user(id: int = None) -> list[DB.User]:
     """
     Returns list of users
@@ -21,7 +21,7 @@ def get_user(id: int = None) -> list[DB.User]:
             )
 
 
-@user_router.post("", tags=docs_tags)
+@user_router.post("", tags=docs_tags, response_model=DB.User)
 def post_user(user_data: DB.User):
     """
     Adds new user entry
