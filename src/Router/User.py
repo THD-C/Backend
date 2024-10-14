@@ -2,12 +2,12 @@ from fastapi import APIRouter
 from opentelemetry import trace
 import src.DB as DB
 
-
+docs_tags = ["User"]
 user_router = APIRouter(prefix="/user")
 tracer = trace.get_tracer(__name__)
 
 
-@user_router.get("")
+@user_router.get("", tags=docs_tags)
 def get_user(id: int = None) -> list[DB.User]:
     """
     Returns list of users
@@ -21,7 +21,7 @@ def get_user(id: int = None) -> list[DB.User]:
             )
 
 
-@user_router.post("")
+@user_router.post("", tags=docs_tags)
 def post_user(user_data: DB.User):
     """
     Adds new user entry
