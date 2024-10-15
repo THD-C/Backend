@@ -17,8 +17,15 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Get image name
+        id: img_name
+        shell: pwsh
+        run: |
+          $ImageName = "${{github.repository}}".ToLower()  
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "name=$ImageName"
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
-          tags: ${{ github.repository }}:latest
+          tags: ${{ steps.img_name.outputs.name }}:latest
