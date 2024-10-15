@@ -7,7 +7,7 @@ user_router = APIRouter(prefix="/user")
 tracer = trace.get_tracer(__name__)
 
 
-@user_router.get("", tags=docs_tags, response_model=DB.User)
+@user_router.get("", tags=docs_tags, response_model=list[DB.User])
 def get_user(id: int = None) -> list[DB.User]:
     """
     Returns list of users
